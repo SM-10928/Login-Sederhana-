@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login | Sederhana</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #172033;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .brand-icon {
+      width: 58px;
+      height: 58px;
+      background: #2563eb;
+      color: white;
+      border-radius: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 27px;
+      font-weight: bold;
+      margin: 0 auto 16px;
+      box-shadow: 0 8px 20px #2563eb30;
+    }
+
+    .brand h1 {
+      font-size: 26px;
+      margin-bottom: 9px;
+      letter-spacing: -0.7px;
+    }
+
+    .brand p {
+      font-size: 14px;
+      color: #7b8496;
+      line-height: 1.6;
+    }
+
+    .login-card {
+      background: #ffffff;
+      border: 1px solid #e8edf5;
+      border-radius: 20px;
+      padding: 30px 24px;
+      box-shadow: 0 12px 40px #1720330a;
+    }
+
+    .login-card h2 {
+      text-align: center;
+      font-size: 23px;
+      margin-bottom: 8px;
+    }
+
+    .description {
+      text-align: center;
+      font-size: 13px;
+      color: #7b8496;
+      margin-bottom: 28px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 9px;
+      color: #344054;
+    }
+
+    .input-group input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid #dce2ec;
+      border-radius: 10px;
+      padding: 0 14px;
+      font-size: 14px;
+      outline: none;
+      background: #ffffff;
+      color: #172033;
+      transition: 0.2s;
+    }
+
+    .input-group input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px #2563eb15;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      padding-right: 90px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      color: #2563eb;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login-button {
+      width: 100%;
+      height: 49px;
+      border: none;
+      border-radius: 10px;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+      transition: 0.2s;
+    }
+
+    .login-button:hover {
+      background: #1d4ed8;
+      box-shadow: 0 6px 18px #2563eb35;
+    }
+
+    .login-button:active {
+      transform: scale(0.98);
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #98a2b3;
+      margin-top: 25px;
+    }
+
+    /* POPUP */
+
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: #10182880;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .popup-overlay.active {
+      display: flex;
+    }
+
+    .popup {
+      width: 100%;
+      max-width: 330px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 28px 22px;
+      text-align: center;
+      box-shadow: 0 20px 60px #00000020;
+      animation: popupIn 0.25s ease;
+    }
+
+    .popup-icon {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 17px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 27px;
+      background: #fee2e2;
+    }
+
+    .popup-icon.success {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .popup h3 {
+      font-size: 21px;
+      margin-bottom: 10px;
+    }
+
+    .popup p {
+      font-size: 13px;
+      color: #7b8496;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+
+    .popup-button,
+    .whatsapp-button {
+      display: block;
+      width: 100%;
+      min-height: 45px;
+      padding: 12px 8px;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .popup-button {
+      background: #2563eb;
+    }
+
+    .popup-button:hover {
+      background: #1d4ed8;
+    }
+
+    .whatsapp-button {
+      margin-top: 12px;
+      background: #25D366;
+      font-size: 13px;
+    }
+
+    .whatsapp-button:hover {
+      background: #1DA851;
+    }
+
+    .popup-button:active,
+    .whatsapp-button:active {
+      transform: scale(0.98);
+    }
+
+    @keyframes popupIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 360px) {
+      .login-card {
+        padding: 25px 18px;
+      }
+
+      .brand h1 {
+        font-size: 23px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="login-container">
+
+    <header class="brand">
+      <div class="brand-icon">👋</div>
+      <h1>Haloo</h1>
+      <p>
+        Selamat datang di halaman login sederhana.<br>
+        Silakan masuk ke akun kamu.
+      </p>
+    </header>
+
+    <section class="login-card">
+      <h2>Login</h2>
+
+      <p class="description">
+        Masukkan username dan password kamu.
+      </p>
+
+      <form id="loginForm">
+
+        <div class="input-group">
+          <label for="username">Username</label>
+
+          <input
+            type="text"
+            id="username"
+            placeholder="Masukkan username"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+
+          <div class="password-wrapper">
+            <input
+              type="password"
+              id="password"
+              placeholder="Masukkan password"
+              autocomplete="current-password"
+              required
+            >
+
+            <button
+              type="button"
+              class="toggle-password"
+              id="togglePassword"
+            >
+              Lihat password
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="login-button">
+          Masuk ke Akun →
+        </button>
+
+      </form>
+    </section>
+
+    <footer class="footer">
+      © 2026 FizzWebDev. All rights reserved.
+    </footer>
+
+  </main>
+
+  <!-- POPUP -->
+
+  <div class="popup-overlay" id="popupOverlay">
+
+    <div class="popup" role="dialog" aria-modal="true">
+
+      <div class="popup-icon" id="popupIcon">!</div>
+
+      <h3 id="popupTitle">Login Gagal</h3>
+
+      <p id="popupMessage">
+        Periksa kembali username dan password kamu.
+      </p>
+
+      <button
+        type="button"
+        class="popup-button"
+        id="popupButton"
+      >
+        Coba Lagi
+      </button>
+
+      <a
+        href="https://wa.me/6282280931293?text=Halo%20bang%2C%20ajari%20aku%20dong%20bang"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="whatsapp-button"
+      >
+        💬 Hubungi Admin FizzWebDev
+      </a>
+
+    </div>
+
+  </div>
+
+  <script>
+    // MENGAMBIL ELEMEN HTML
+    const loginForm = document.getElementById("loginForm");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+
+    const togglePassword = document.getElementById("togglePassword");
+
+    const popupOverlay = document.getElementById("popupOverlay");
+    const popupIcon = document.getElementById("popupIcon");
+    const popupTitle = document.getElementById("popupTitle");
+    const popupMessage = document.getElementById("popupMessage");
+    const popupButton = document.getElementById("popupButton");
+
+    // AKUN DEMO UNTUK LATIHAN
+    const akun = {
+      username: "user",
+      password: "admin531"
+    };
+
+    let loginBerhasil = false;
+
+    // MENAMPILKAN POPUP
+    function tampilkanPopup(judul, pesan, berhasil = false) {
+      loginBerhasil = berhasil;
+
+      popupTitle.textContent = judul;
+      popupMessage.textContent = pesan;
+
+      if (berhasil) {
+        popupIcon.textContent = "✓";
+        popupIcon.classList.add("success");
+        popupButton.textContent = "Selesai";
+      } else {
+        popupIcon.textContent = "!";
+        popupIcon.classList.remove("success");
+        popupButton.textContent = "Coba Lagi";
+      }
+
+      popupOverlay.classList.add("active");
+    }
+
+    // MELIHAT ATAU MENYEMBUNYIKAN PASSWORD
+    togglePassword.addEventListener("click", function () {
+      const tersembunyi = passwordInput.type === "password";
+
+      passwordInput.type = tersembunyi ? "text" : "password";
+
+      togglePassword.textContent = tersembunyi
+        ? "Sembunyikan"
+        : "Lihat password";
+    });
+
+    // PROSES LOGIN
+    loginForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value;
+
+      if (username !== akun.username) {
+        tampilkanPopup(
+          "Username Salah!",
+          "Username tidak ditemukan. Periksa kembali, ya."
+        );
+
+        return;
+      }
+
+      if (password !== akun.password) {
+        tampilkanPopup(
+          "Password Salah!",
+          "Password tidak sesuai. Silakan coba kembali."
+        );
+
+        return;
+      }
+
+      tampilkanPopup(
+        "Login Berhasil!",
+        "Selamat datang! Ini adalah contoh halaman login yang dibuat oleh Hafiz, pelajar kelas X SMK jurusan RPL. Mohon maaf jika masih ada kekurangan. Jika ingin belajar bersama, silakan hubungi saya!",
+        true
+      );
+    });
+
+    // TOMBOL POPUP
+    popupButton.addEventListener("click", function () {
+      popupOverlay.classList.remove("active");
+
+      if (loginBerhasil) {
+        loginForm.reset();
+
+        passwordInput.type = "password";
+        togglePassword.textContent = "Lihat password";
+      } else {
+        passwordInput.focus();
+      }
+    });
+
+    // MENUTUP POPUP DENGAN MENEKAN AREA GELAP
+    popupOverlay.addEventListener("click", function (event) {
+      if (event.target === popupOverlay) {
+        popupOverlay.classList.remove("active");
+      }
+    });
+  </script>
+
+</body>
+</html>
